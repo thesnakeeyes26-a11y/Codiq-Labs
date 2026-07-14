@@ -1,0 +1,13 @@
+{
+  "name": "codiq-labs",
+  "version": "1.0.0",
+  "description": "Premium Animated Codiq Labs Agency Website",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
