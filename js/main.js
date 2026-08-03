@@ -144,8 +144,10 @@ function initServiceModals() {
 function initFAQs() {
   const headers = document.querySelectorAll('.faq-header');
 
-  function toggleFAQ(header) {
-    const parent = header.parentElement;
+  // Initialize aria-expanded via JS (div cannot have aria-expanded without role in HTML)
+  headers.forEach(header => header.setAttribute('aria-expanded', 'false'));
+
+  function toggleFAQ(header) {    const parent = header.parentElement;
     const content = parent.querySelector('.faq-content');
 
     // Close other FAQs
