@@ -144,22 +144,32 @@ function initServiceModals() {
 function initFAQs() {
   const headers = document.querySelectorAll('.faq-header');
 
-  headers.forEach(header => {
-    header.addEventListener('click', () => {
-      const parent = header.parentElement;
-      const content = parent.querySelector('.faq-content');
-      
-      // Close other FAQs
-      document.querySelectorAll('.faq-item').forEach(item => {
-        if (item !== parent && item.classList.contains('active')) {
-          item.classList.remove('active');
-          item.querySelector('.faq-content').style.height = '0px';
-        }
-      });
+  function toggleFAQ(header) {
+    const parent = header.parentElement;
+    const content = parent.querySelector('.faq-content');
 
-      // Toggle current FAQ
-      const isActive = parent.classList.toggle('active');
-      content.style.height = isActive ? `${content.scrollHeight}px` : '0px';
+    // Close other FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+      if (item !== parent && item.classList.contains('active')) {
+        item.classList.remove('active');
+        item.querySelector('.faq-content').style.height = '0px';
+        item.querySelector('.faq-header').setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Toggle current FAQ
+    const isActive = parent.classList.toggle('active');
+    content.style.height = isActive ? `${content.scrollHeight}px` : '0px';
+    header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+  }
+
+  headers.forEach(header => {
+    header.addEventListener('click', () => toggleFAQ(header));
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFAQ(header);
+      }
     });
   });
 }
