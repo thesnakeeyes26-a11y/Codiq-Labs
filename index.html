@@ -40,7 +40,10 @@
   <link rel="dns-prefetch" href="https://unpkg.com">
   <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+  <!-- Non-render-blocking font load -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet"></noscript>
   
   <!-- Stylesheet Link -->
   <link rel="stylesheet" href="css/style.css">
@@ -242,8 +245,8 @@
         <!-- Project 5: Finance Ledger Pro -->
         <div class="portfolio-item reveal-card" data-category="app" >
           <div class="portfolio-preview glass-panel" style="padding:0;overflow:hidden;display:flex;gap:4px;background:#0d0d14;">
-            <img src="/assets/portfolio/project-1.jpg" alt="Finance Ledger Pro Dashboard" loading="lazy" decoding="async" style="width:50%;height:100%;object-fit:cover;object-position:top;border-radius:12px 0 0 12px;">
-            <img src="/assets/portfolio/project-2.jpg" alt="Finance Ledger Pro Customers" loading="lazy" decoding="async" style="width:50%;height:100%;object-fit:cover;object-position:top;border-radius:0 12px 12px 0;">
+            <picture style="width:50%;height:100%;border-radius:12px 0 0 12px;"><source srcset="/assets/portfolio/project-1.webp" type="image/webp"><img src="/assets/portfolio/project-1.jpg" alt="Finance Ledger Pro Dashboard" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:12px 0 0 12px;"></picture>
+            <picture style="width:50%;height:100%;border-radius:0 12px 12px 0;"><source srcset="/assets/portfolio/project-2.webp" type="image/webp"><img src="/assets/portfolio/project-2.jpg" alt="Finance Ledger Pro Customers" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:0 12px 12px 0;"></picture>
           </div>
           <div class="portfolio-info">
             <div class="project-tags" style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;">
@@ -259,8 +262,8 @@
         <!-- Project 6: SpendWise -->
         <div class="portfolio-item reveal-card" data-category="app" >
           <div class="portfolio-preview glass-panel" style="padding:0;overflow:hidden;display:flex;gap:4px;background:#0a1a18;">
-            <img src="/assets/portfolio/project-3.jpg" alt="SpendWise Dashboard" loading="lazy" decoding="async" style="width:50%;height:100%;object-fit:cover;object-position:top;border-radius:12px 0 0 12px;">
-            <img src="/assets/portfolio/project-4.jpg" alt="SpendWise Categories" loading="lazy" decoding="async" style="width:50%;height:100%;object-fit:cover;object-position:top;border-radius:0 12px 12px 0;">
+            <picture style="width:50%;height:100%;border-radius:12px 0 0 12px;"><source srcset="/assets/portfolio/project-3.webp" type="image/webp"><img src="/assets/portfolio/project-3.jpg" alt="SpendWise Dashboard" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:12px 0 0 12px;"></picture>
+            <picture style="width:50%;height:100%;border-radius:0 12px 12px 0;"><source srcset="/assets/portfolio/project-4.webp" type="image/webp"><img src="/assets/portfolio/project-4.jpg" alt="SpendWise Categories" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:0 12px 12px 0;"></picture>
           </div>
           <div class="portfolio-info">
             <div class="project-tags" style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;">
