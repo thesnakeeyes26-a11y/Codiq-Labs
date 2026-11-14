@@ -1,278 +1,42 @@
-// ── INTERACTIVE WEBPAGE LOGIC ──
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Lucide Icons
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
-
-  // Initialize all modular elements
-  initMobileNav();
-  initServiceModals();
-
-  initFAQs();
-  initTestimonialSlider();
-  initPortfolioModal();
-});
-
-// ── MOBILE NAVIGATION ──
-function initMobileNav() {
-  const toggle = document.querySelector('.mobile-toggle');
-  const links = document.querySelector('.nav-links');
-  const linkItems = document.querySelectorAll('.nav-link-item');
-
-  if (!toggle || !links) return;
-
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    links.classList.toggle('open');
-  });
-
-  linkItems.forEach(item => {
-    item.addEventListener('click', () => {
-      toggle.classList.remove('open');
-      links.classList.remove('open');
-    });
+(function(){
+var $=function(i){return document.getElementById(i)},nav=$('nav');
+$('burger').addEventListener('click',function(){var o=nav.classList.toggle('open');this.setAttribute('aria-expanded',o)});
+/* MAGNETIC */
+if(matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.mag').forEach(function(el){
+    el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();el.style.transition='transform .15s';el.style.transform='translate('+(e.clientX-r.left-r.width/2)*.3+'px,'+(e.clientY-r.top-r.height/2)*.3+'px) scale(1.04)'});
+    el.addEventListener('mouseleave',function(){el.style.transition='transform .7s cubic-bezier(.2,1.6,.4,1)';el.style.transform=''});
   });
 }
 
-// ── SERVICE DETAIL MODALS ──
-const servicesData = {
-  automation: {
-    eyebrow: "Service 01",
-    title: "Work Automation",
-    desc: "We design and deploy AI-powered automation systems that eliminate repetitive manual work from your business. From lead management to client communication — every workflow is custom-built for your exact needs, saving you hours every single day.",
-    features: [
-      "Email & WhatsApp auto-reply setup",
-      "Lead capture & CRM integration (Notion, Google Sheets, HubSpot)",
-      "Automated follow-up sequences",
-      "Invoice & payment reminder automation",
-      "Custom n8n / Make workflow building",
-      "Ongoing system maintenance & optimization"
-    ]
-  },
-  website: {
-    eyebrow: "Service 02",
-    title: "Website Development",
-    desc: "We build premium, animated, mobile-responsive websites that convert visitors into clients. From first concept to live deployment, every site is custom-designed around your brand and built to perform at elite speeds.",
-    features: [
-      "Custom premium designs — no templates",
-      "Smooth hardware-accelerated animations & scroll effects",
-      "Mobile-first, fully responsive layouts",
-      "Fast loading speeds & SEO-friendly markup structure",
-      "Contact forms & automated lead capture systems",
-      "Domain configuration & free hosting deployment setup"
-    ]
-  },
-  video: {
-    eyebrow: "Service 03",
-    title: "App Development",
-    desc: "We design and develop high-performance Android and web applications tailored to your business needs — from concept and UI/UX design to full deployment. Clean code, smooth animations, and seamless user experience.",
-    features: [
-      "Android app development (Java/Kotlin)",
-      "Web app development (React, Next.js)",
-      "Custom UI/UX design & smooth animations",
-      "API integration & backend connectivity",
-      "From idea to live deployment",
-      "Ongoing support & maintenance"
-    ]
-  },
-  voice: {
-    eyebrow: "Service 04",
-    title: "Voice Agent Services",
-    desc: "Deploy intelligent AI voice agents that work 24/7—handling inbound customer queries, qualifying incoming cold leads, and scheduling appointments. Your agency stays responsive even when your human team is offline.",
-    features: [
-      "24/7 inbound AI customer call handling",
-      "Lead qualification & scoring telephone calls",
-      "Automated Google Calendar appointment scheduling",
-      "Custom synthetic voice and agent personality setups",
-      "Bi-lingual language support (Hindi + English)",
-      "Call transcript logs, analytics & pipeline reporting"
-    ]
-  }
-};
-
-function initServiceModals() {
-  const overlay = document.getElementById('modal-overlay');
-  const closeBtn = document.getElementById('modal-close-btn');
-
-  if (!overlay || !closeBtn) return;
-
-  // Global window functions to open modals from cards
-  window.openModal = function(key) {
-    const data = servicesData[key];
-    if (!data) return;
-
-    document.getElementById('modal-eyebrow').textContent = data.eyebrow;
-    document.getElementById('modal-title').textContent = data.title;
-    document.getElementById('modal-desc').textContent = data.desc;
-    
-    const featuresList = document.getElementById('modal-features');
-    featuresList.innerHTML = data.features.map(f => `
-      <li>
-        <span class="feature-dot"></span>
-        <span>${f}</span>
-      </li>
-    `).join('');
-
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Lock background scroll
-  };
-
-  window.closeModalDirect = function() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = ''; // Unlock scroll
-  };
-
-  closeBtn.addEventListener('click', window.closeModalDirect);
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      window.closeModalDirect();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      window.closeModalDirect();
-    }
-  });
+/* CURTAIN FOOTER scroll */
+var rv=$('reveal'),gi=$('giant'),fh=$('fh'),fp=$('fp');
+function clamp(v){return Math.max(0,Math.min(1,v))}
+function onScroll(){if(!rv)return;
+  var vh=window.innerHeight,top=rv.getBoundingClientRect().top,p=clamp(1-top/(vh*.8)),q=clamp((vh*.4-top)/(vh*.4));
+  gi.style.transform='translate(-50%,'+(1-p)*10+'vh) scale('+(.8+.2*p)+')';gi.style.opacity=p;
+  var a=clamp(q*1.25),b=clamp(q*1.25-.25);
+  fh.style.transform='translateY('+(1-a)*50+'px)';fh.style.opacity=a;fp.style.transform='translateY('+(1-b)*50+'px)';fp.style.opacity=b;
 }
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);
+if($('up'))$('up').addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'})});
 
 
-// ── FAQ COLLAPSIBLE ACCORDIONS ──
-function initFAQs() {
-  const headers = document.querySelectorAll('.faq-header');
+/* Tally: third-party script loads only when the visitor asks for the form */
+function loadTally(cb){if(window.Tally)return cb();var s=document.createElement('script');s.src='https://tally.so/widgets/embed.js';s.onload=cb;s.onerror=function(){location.href='/contact'};document.head.appendChild(s)}
+document.querySelectorAll('[data-tally-form]').forEach(function(a){a.addEventListener('click',function(e){
+  e.preventDefault();var id=a.getAttribute('data-tally-form');
+  loadTally(function(){Tally.openPopup(id,{layout:'modal',width:640,overlay:true,hideTitle:true,autoClose:0})})})});
+window.codiqTally=function(id){loadTally(function(){Tally.openPopup(id,{layout:'modal',width:640,overlay:true,hideTitle:true,autoClose:0})})};
+if(document.querySelector('iframe[data-tally-src]'))loadTally(function(){Tally.loadEmbeds()});
 
-  // Initialize aria-expanded via JS (div cannot have aria-expanded without role in HTML)
-  headers.forEach(header => header.setAttribute('aria-expanded', 'false'));
-
-  function toggleFAQ(header) {    const parent = header.parentElement;
-    const content = parent.querySelector('.faq-content');
-
-    // Close other FAQs
-    document.querySelectorAll('.faq-item').forEach(item => {
-      if (item !== parent && item.classList.contains('active')) {
-        item.classList.remove('active');
-        item.querySelector('.faq-content').style.height = '0px';
-        item.querySelector('.faq-header').setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // Toggle current FAQ
-    const isActive = parent.classList.toggle('active');
-    content.style.height = isActive ? `${content.scrollHeight}px` : '0px';
-    header.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-  }
-
-  headers.forEach(header => {
-    header.addEventListener('click', () => toggleFAQ(header));
-    header.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleFAQ(header);
-      }
-    });
-  });
-}
-
-// ── TESTIMONIAL CAROUSEL ROTATOR ──
-function initTestimonialSlider() {
-  const slides = document.querySelectorAll('.testi-card');
-  const dots = document.querySelectorAll('.testi-dot');
-  let currentSlide = 0;
-  let timer = null;
-
-  if (slides.length === 0) return;
-
-  function showSlide(index) {
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
-
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
-    currentSlide = index;
-  }
-
-  function nextSlide() {
-    let next = (currentSlide + 1) % slides.length;
-    showSlide(next);
-  }
-
-  function resetTimer() {
-    clearInterval(timer);
-    timer = setInterval(nextSlide, 7000); // Rotate every 7 seconds
-  }
-
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const idx = parseInt(dot.getAttribute('data-slide'));
-      showSlide(idx);
-      resetTimer();
-    });
-  });
-
-  // Initialize auto-rotation
-  resetTimer();
-}
-
-
-// ── PORTFOLIO LIGHTBOX MODAL ──
-function initPortfolioModal() {
-  const overlay = document.getElementById('portfolio-modal-overlay');
-  const closeBtn = document.getElementById('portfolio-modal-close-btn');
-  const mediaContainer = document.getElementById('portfolio-modal-media');
-  const titleEl = document.getElementById('portfolio-modal-title');
-  const tagsEl = document.getElementById('portfolio-modal-tags');
-  const descEl = document.getElementById('portfolio-modal-desc');
-
-  if (!overlay || !closeBtn || !mediaContainer || !titleEl || !tagsEl || !descEl) return;
-
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-  portfolioItems.forEach(item => {
-    item.style.cursor = 'pointer';
-    item.addEventListener('click', () => {
-      const title = item.querySelector('h4')?.textContent?.trim() || '';
-      const desc = item.querySelector('.portfolio-info p')?.textContent?.trim() || '';
-      const tags = Array.from(item.querySelectorAll('.project-tags span')).map(span => span.textContent.trim());
-      const images = Array.from(item.querySelectorAll('.portfolio-preview img'));
-
-      titleEl.textContent = title;
-      descEl.textContent = desc;
-      tagsEl.innerHTML = tags.map(tag => `<span>${tag}</span>`).join('');
-
-      if (images.length > 0) {
-        mediaContainer.innerHTML = `
-          <div class="portfolio-modal-gallery">
-            ${images.map(img => `<img src="${img.getAttribute('src')}" alt="${img.getAttribute('alt') || title}">`).join('')}
-          </div>
-        `;
-      } else {
-        mediaContainer.innerHTML = '';
-      }
-
-      overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function closePortfolioModal() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  closeBtn.addEventListener('click', closePortfolioModal);
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      closePortfolioModal();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closePortfolioModal();
-    }
-  });
-}
+/* Navbar: hide on scroll down, show on scroll up */
+var lastY=window.pageYOffset,tick=false;
+function navScroll(){tick=false;var y=window.pageYOffset;
+  if(nav.classList.contains('open')||y<90||y<lastY-6)nav.classList.remove('hide');
+  else if(y>lastY+6)nav.classList.add('hide');
+  lastY=y}
+addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(navScroll)}},{passive:true});
+nav.addEventListener('focusin',function(){nav.classList.remove('hide')});
+onScroll();
+})();
