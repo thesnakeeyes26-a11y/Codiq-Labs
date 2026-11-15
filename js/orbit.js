@@ -79,7 +79,7 @@ function ui(){
  root.dataset.state=a===null?'orbit':'spotlight';
  ring.style.opacity=a===null?1:0;ring.style.transform=a===null?'scale(1)':'scale(.2)';
  title.style.opacity=a===null?1:0;title.style.filter=a===null?'blur(0px)':'blur(8px)';title.setAttribute('aria-hidden',a!==null);
- act.innerHTML=a!==null?'<button type="button" class="o-pill" data-back>← Back to orbit</button>':(reduced?'':'<button type="button" class="o-circ" data-toggle aria-label="'+(st.playing?'Pause':'Play')+' orbit" aria-pressed="'+st.playing+'">'+(st.playing?'❚❚':'▶')+'</button>');
+ act.innerHTML=a!==null?'<button type="button" class="o-pill" data-back>← Back to orbit</button>':('<button type="button" class="o-circ" data-toggle aria-label="'+(st.playing?'Pause':'Play')+' orbit" aria-pressed="'+st.playing+'">'+(st.playing?'❚❚':'▶')+'</button>');
  nodes.forEach(function(n,i){n.setAttribute('aria-hidden',a!==null&&a!==i);btns[i].tabIndex=a===null?0:-1;btns[i].disabled=a!==null});
  hint.textContent=a===null?'Click a work to bring it closer':'Drag the dots · Esc to return';
  status.textContent=it?(a+1)+' of '+total+': '+it.title:total+' works in orbit';
@@ -101,7 +101,7 @@ function step(dir,focus){var a=st.active;setActive(a===null?(dir>0?0:total-1):(a
 
 /* animation loop (paused offscreen / hidden tab / reduced motion) */
 function tick(now){
- st.raf=0;if(!st.vis||document.hidden)return;
+ st.raf=0;if(!st.vis||document.hidden||(reduced&&!st.playing))return;
  var el=st.prev?Math.min(now-st.prev,64):0;st.prev=now;
  if(st.active===null&&(!st.changed||now-st.start>=FLIGHT)){
   if(st.playing&&!st.focusTrig)st.angle+=el/40000*TAU*(st.hover===null?1:.18);
@@ -109,7 +109,7 @@ function tick(now){
  }
  st.raf=requestAnimationFrame(tick);
 }
-function kick(){if(reduced||st.raf||!st.vis||document.hidden)return;st.prev=0;st.raf=requestAnimationFrame(tick)}
+function kick(){if((reduced&&!st.playing)||st.raf||!st.vis||document.hidden)return;st.prev=0;st.raf=requestAnimationFrame(tick)}
 new IntersectionObserver(function(e){st.vis=e[0].isIntersecting;kick()}).observe(root);
 document.addEventListener('visibilitychange',kick);
 mq.addEventListener('change',function(){reduced=mq.matches;if(reduced)st.playing=false;ui();layout()});

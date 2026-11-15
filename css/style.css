@@ -246,3 +246,13 @@ html{scrollbar-width:thin;scrollbar-color:#7c5cff #05030f}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#a78bfa,#7c5cff 50%,#4f46e5);border-radius:10px;border:2px solid #05030f}
 ::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#c4b5fd,#8f73ff 50%,#6254f0)}
 ::-webkit-scrollbar-corner{background:#05030f}
+
+/* Footer on phones: compact rows so the giant CODIQ stays visible above the bottom bar */
+@media(max-width:620px){
+.giant{bottom:calc(env(safe-area-inset-bottom,0px) + 112px);font-size:27vw}
+.fmain{padding:80px 16px 0}.fmain h2{margin-bottom:26px}
+.pills{gap:14px}.row{gap:8px}
+.pill{padding:12px 20px;font-size:14px}.pill.sm{padding:9px 14px;font-size:12px}
+.fbar{gap:10px;padding-bottom:18px}.fbar>:nth-child(1){font-size:9.5px;letter-spacing:.1em;white-space:nowrap}
+.fbar .pill{padding:10px 16px;font-size:10px}.fbar .up{padding:0;width:42px;height:42px}
+}
